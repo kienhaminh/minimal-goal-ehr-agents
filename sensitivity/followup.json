@@ -1,0 +1,38 @@
+{
+  "S5_no_record_locations": {
+    "terminology": [
+      "CT Abdomen: the CPT codes for existing CT Abdomen studies are IMGCT0491 or IMGIL0001.",
+      "CT Abdomen/Pelvis with IV contrast: the CPT code is 74177.",
+      "Heart rate: the code for heart rate is 'HEARTRATE'.",
+      "Urinary catheter: the procedure code for urinary catheter is 'NUR1373'.",
+      "Malignant neoplasm of left kidney: the ICD-10 code is C64.2.",
+      "Interventional Radiology referral: the CPT code is CON417.",
+      "TSH: the code for TSH is 'TSH'.",
+      "Free T4: the code for free T4 is 'FT4'.",
+      "QTc interval: the code for QTc interval is 'QTCINTERVAL'.",
+      "12-lead ECG: the SNOMED code for 12-lead ECG is 445118002.",
+      "Influenza vaccine: the CPT code for influenza vaccine is 90686.",
+      "COVID-19 vaccine: the code for COVID-19 vaccine procedure is 'COVIDVACCINE'; COVID-19 vaccines are also recorded as MedicationRequest with text containing 'COVID-19 VAC'.",
+      "COVID vaccine booster: the CPT code for the single-dose COVID vaccine is 91320.",
+      "Opioid analgesic medications: hydromorphone, oxycodone, fentanyl, hydrocodone, morphine.",
+      "QT-prolonging medications: text containing ondansetron, prochlorperazine and most antipsychotic medications.",
+      "Anticoagulant medications: any anti-coagulant medication (for example, LMWH, DOAC, etc), including heparin."
+    ],
+    "terminology_description": "Searches the hospital terminology. Each entry gives the code of a clinical item. Use it to turn a clinical term into the code that a search or an order needs."
+  },
+  "S6_goal_paraphrase": {
+    "template": "Patient {patient}: assess {topic} and carry out what hospital policy requires.",
+    "topics": {
+      "task1": "kidney mass surveillance with abdominal CT",
+      "task2": "venous thromboembolism prevention",
+      "task3": "pulse rate",
+      "task4": "indwelling bladder catheter",
+      "task5": "left kidney cancer follow-up",
+      "task6": "thyroid status",
+      "task7": "corrected QT interval",
+      "task8": "opioid prescriptions and overdose reversal medication",
+      "task9": "flu immunization",
+      "task10": "coronavirus immunization"
+    }
+  }
+}

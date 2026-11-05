@@ -1,0 +1,544 @@
+{
+  "locked_at": "2026-10-28T08:43:20+00:00",
+  "decision": "user decision 2026-10-28: the design is locked after the runs D-dev-100-scoped to -3; validate and test run this source once per arm and model, with no design change between them",
+  "source_sha256": {
+    "files": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "37ff65ae0d09eb07588552d73b04143b3035053b113837fb69e994c5771f4868",
+      "fhir_workers.py": "6c8ebfa4052936152cced618b47f17efbec1b98bd2d381eaa26dd3ffc6cae143",
+      "institution.py": "4a6992dbabb47f7dec5e2348aab366c5e3f04b0d6c81618cc616347a7824c253",
+      "openrouter_transport.py": "3665bfc46918f44f6375a90e916409a4133079d05b6b0167aedf36d1b1ab1551",
+      "rescore.py": "17e45b9b6b98720462ea16a7af2fe583a8a60265c4bfd00c674717ab2c52f8e8",
+      "revised_scorer.py": "9d2e0ad6224567a5f27f03556c40b8ca95fcee6742d4da84423da09e5f3ca2e9",
+      "run.py": "65fab17f7a9925c2208fbf07b88b4ecb2f75f550d95725fec7a25fd12ac0bbc7",
+      "settings.py": "7c2656c46a108ab12e21db5f016dfb627d0a51310a0dd1701b0305ffb3aeaa34",
+      "tasks.py": "0ac3691cb780aa968679229580b301ef9f8e6d79895b4a619ca749f1e1211869",
+      "tools.py": "7953e17540bdcb0bf2e993763d21e20e927908313948c013ae59d671423395d8"
+    },
+    "combined": "e5d69f7fa6cba2cde74a580fc23aa4121a8e9da19edbb9c396ddd76a6e17d624"
+  },
+  "system_prompt": "You work as a clinician in a hospital's electronic health record, through the tools you are given. The user message sets one task on one topic. One rule governs it: the task's own instructions, or the hospital's protocol for that topic; other protocols that a search returns belong to other reviews.\n1. Read the rule. List each criterion and the action it triggers, including what the rule says a missing record means.\n2. Settle each criterion from the chart, with the codes, sources and times the rule names: met when the records show it, otherwise unmet. This step is complete when every criterion is marked met or unmet with its records.\n3. Act on each met criterion exactly as the rule states; an unmet criterion leaves the chart unchanged. Then finish with your answer.",
+  "review": "Before the task ends, check your work against the task's rule. {changes}\nEach change carries out, once, an action of that rule whose criterion the records showed met, and each such action is done. Then call `finish` with your final answer.",
+  "tool_fixes": [
+    "bundle_wrapper",
+    "calculator_builtins",
+    "calculator_time",
+    "clock",
+    "code_lists",
+    "compact_json",
+    "compact_records",
+    "descriptions",
+    "discontinue",
+    "measurement_summary",
+    "medication_dead_params",
+    "medication_name",
+    "medication_timing",
+    "next_page",
+    "observation_code_list",
+    "observation_date",
+    "paging",
+    "paging_description",
+    "procedure_date",
+    "server_meta",
+    "sort",
+    "status_filter",
+    "vitals_date",
+    "vitals_name",
+    "write_criteria"
+  ],
+  "scorer": "src.medagentbenchevals.new_refsol",
+  "fhir_image": "jyxsu6/medagentbench@sha256:3fb83d7ed71c5476f9eb6212bd440a909ef7505922bbc757dc488a8fc0701966",
+  "dev_runs": {
+    "count": 52,
+    "D_count": 27,
+    "runs": [
+      {
+        "run": "rescore-revised-scorer",
+        "arm": null,
+        "part": null,
+        "model": null,
+        "attempts": null,
+        "passed": null,
+        "started_at": null
+      },
+      {
+        "run": "rescore-revised-scorer-2",
+        "arm": null,
+        "part": null,
+        "model": null,
+        "attempts": null,
+        "passed": null,
+        "started_at": null
+      },
+      {
+        "run": "A-dev-smoke-1",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 5,
+        "passed": 2,
+        "started_at": "2026-10-26T17:49:32+00:00"
+      },
+      {
+        "run": "A-dev-smoke-2",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 5,
+        "passed": 3,
+        "started_at": "2026-10-26T18:23:17+00:00"
+      },
+      {
+        "run": "A-dev-50",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 50,
+        "passed": 43,
+        "started_at": "2026-10-26T18:27:57+00:00"
+      },
+      {
+        "run": "A-dev-50-corrected",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 50,
+        "passed": 46,
+        "started_at": "2026-10-26T19:07:03+00:00"
+      },
+      {
+        "run": "B-dev-50",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 50,
+        "passed": 40,
+        "started_at": "2026-10-26T23:22:11+00:00"
+      },
+      {
+        "run": "A-dev-50-sol",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6.1-sol",
+        "attempts": 50,
+        "passed": 29,
+        "started_at": "2026-10-27T00:25:59+00:00"
+      },
+      {
+        "run": "B-dev-50-sol",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6.1-sol",
+        "attempts": 50,
+        "passed": 31,
+        "started_at": "2026-10-27T00:33:10+00:00"
+      },
+      {
+        "run": "A-dev-100",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 87,
+        "started_at": "2026-10-27T01:27:01+00:00"
+      },
+      {
+        "run": "B-dev-100",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 87,
+        "started_at": "2026-10-27T01:36:37+00:00"
+      },
+      {
+        "run": "B-dev-100-terminology",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 89,
+        "started_at": "2026-10-27T04:58:13+00:00"
+      },
+      {
+        "run": "C-dev-100",
+        "arm": "C",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 42,
+        "started_at": "2026-10-27T06:55:14+00:00"
+      },
+      {
+        "run": "D-dev-100",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 77,
+        "started_at": "2026-10-27T07:05:51+00:00"
+      },
+      {
+        "run": "B-dev-100-v3",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 85,
+        "started_at": "2026-10-27T07:47:30+00:00"
+      },
+      {
+        "run": "D-dev-100-v2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 83,
+        "started_at": "2026-10-27T07:58:43+00:00"
+      },
+      {
+        "run": "original-dev-100",
+        "arm": "original",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 66,
+        "started_at": "2026-10-27T09:32:34+00:00"
+      },
+      {
+        "run": "A-dev-100-vitals",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 87,
+        "started_at": "2026-10-27T09:41:58+00:00"
+      },
+      {
+        "run": "B-dev-100-vitals",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 84,
+        "started_at": "2026-10-27T09:51:21+00:00"
+      },
+      {
+        "run": "C-dev-100-vitals",
+        "arm": "C",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 34,
+        "started_at": "2026-10-27T10:02:26+00:00"
+      },
+      {
+        "run": "D-dev-100-vitals",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 79,
+        "started_at": "2026-10-27T10:13:36+00:00"
+      },
+      {
+        "run": "D-dev-100-clock",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 83,
+        "started_at": "2026-10-27T11:55:46+00:00"
+      },
+      {
+        "run": "B-dev-100-clock",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 83,
+        "started_at": "2026-10-27T12:09:21+00:00"
+      },
+      {
+        "run": "A-dev-100-clock",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 85,
+        "started_at": "2026-10-27T12:19:42+00:00"
+      },
+      {
+        "run": "C-dev-100-clock",
+        "arm": "C",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 40,
+        "started_at": "2026-10-27T12:29:15+00:00"
+      },
+      {
+        "run": "D-dev-100-clock-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 81,
+        "started_at": "2026-10-27T12:49:26+00:00"
+      },
+      {
+        "run": "B-dev-100-clock-2",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 86,
+        "started_at": "2026-10-27T13:03:22+00:00"
+      },
+      {
+        "run": "D-dev-100-obs",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 79,
+        "started_at": "2026-10-27T14:14:58+00:00"
+      },
+      {
+        "run": "B-dev-100-obs",
+        "arm": "B",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 86,
+        "started_at": "2026-10-27T14:29:47+00:00"
+      },
+      {
+        "run": "A-dev-100-obs",
+        "arm": "A",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 89,
+        "started_at": "2026-10-27T14:40:30+00:00"
+      },
+      {
+        "run": "C-dev-100-obs",
+        "arm": "C",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": null,
+        "passed": null,
+        "started_at": "2026-10-27T14:50:11+00:00"
+      },
+      {
+        "run": "D-dev-100-context",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 85,
+        "started_at": "2026-10-28T00:14:46+00:00"
+      },
+      {
+        "run": "D-dev-100-context-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 82,
+        "started_at": "2026-10-28T00:29:43+00:00"
+      },
+      {
+        "run": "D-dev-100-context-3",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 81,
+        "started_at": "2026-10-28T00:42:02+00:00"
+      },
+      {
+        "run": "D-dev-100-forms",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 88,
+        "started_at": "2026-10-28T00:58:07+00:00"
+      },
+      {
+        "run": "D-dev-100-descriptions",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 90,
+        "started_at": "2026-10-28T01:44:03+00:00"
+      },
+      {
+        "run": "D-dev-100-tools",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 93,
+        "started_at": "2026-10-28T02:26:23+00:00"
+      },
+      {
+        "run": "D-dev-100-stable",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 86,
+        "started_at": "2026-10-28T03:03:40+00:00"
+      },
+      {
+        "run": "D-dev-100-stable-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 86,
+        "started_at": "2026-10-28T03:16:56+00:00"
+      },
+      {
+        "run": "D-dev-100-stable-3",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 85,
+        "started_at": "2026-10-28T03:28:56+00:00"
+      },
+      {
+        "run": "D-dev-100-layers",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 91,
+        "started_at": "2026-10-28T04:39:55+00:00"
+      },
+      {
+        "run": "D-dev-100-layers-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 93,
+        "started_at": "2026-10-28T04:51:23+00:00"
+      },
+      {
+        "run": "D-dev-100-layers-3",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 84,
+        "started_at": "2026-10-28T05:02:40+00:00"
+      },
+      {
+        "run": "D-dev-100-criteria",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 87,
+        "started_at": "2026-10-28T05:46:00+00:00"
+      },
+      {
+        "run": "D-dev-100-criteria-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 90,
+        "started_at": "2026-10-28T05:57:30+00:00"
+      },
+      {
+        "run": "D-dev-100-criteria-3",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 89,
+        "started_at": "2026-10-28T06:09:28+00:00"
+      },
+      {
+        "run": "D-dev-100-standing",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 85,
+        "started_at": "2026-10-28T06:47:32+00:00"
+      },
+      {
+        "run": "D-dev-100-standing-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 85,
+        "started_at": "2026-10-28T07:02:31+00:00"
+      },
+      {
+        "run": "D-dev-100-standing-3",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 90,
+        "started_at": "2026-10-28T07:16:46+00:00"
+      },
+      {
+        "run": "D-dev-100-scoped",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 94,
+        "started_at": "2026-10-28T07:45:57+00:00"
+      },
+      {
+        "run": "D-dev-100-scoped-2",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 91,
+        "started_at": "2026-10-28T07:59:29+00:00"
+      },
+      {
+        "run": "D-dev-100-scoped-3",
+        "arm": "D",
+        "part": "dev",
+        "model": "gpt-6-luna",
+        "attempts": 100,
+        "passed": 91,
+        "started_at": "2026-10-28T08:13:12+00:00"
+      }
+    ]
+  },
+  "note_2026-11-04": "user decision 2026-11-04: the GPT-6.1-Terra development runs of 2026-10-27, which tested an earlier setup and did not shape the final design, were deleted with their entries in this list; GPT-6.1-Terra is an evaluation model.",
+  "source_sha256_paper_runs": {
+    "files": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "6b4ee9a56cdc5dcda6a950c631a12469bfb4ee96297e346ec44ff60c18d9c1d6",
+      "claude_transport.py": "9d7643b144681c085aab0377d7637f46bbea5ee9a875290657af1eeb36649d51",
+      "fhir_workers.py": "7fad55267a6f62e074233d2ec1eb104ceb89c6d6e59431f092548050bff09d7e",
+      "institution.py": "c74c1ed255855274b9c20a697b820f32580315168effbca14f1f3d741f4a3a6e",
+      "openai_transport.py": "b17db48ed8e1aec9e785ed37d8cdc8562cdc4c7b1d06eccb55d961acfac372d8",
+      "rescore.py": "9cea75753f773f637613530cab3e989f79adbc25c04bd9acaa8568c8f00d308a",
+      "revised_scorer.py": "9d2e0ad6224567a5f27f03556c40b8ca95fcee6742d4da84423da09e5f3ca2e9",
+      "run.py": "ae6d0d25b94640951e457d21271e35af89a12e0562f65c7d653613f6dea44508",
+      "settings.py": "8133856b4cef4e5240c7cbc0964e8d48e26f631ba190a39098e475fae9a6cf07",
+      "tasks.py": "af74f0aa3fd6b0d98e6f6f7c6bc655fb7f44df5549cf928e00ae027815aa0b7a",
+      "tools.py": "d410163bbbdc2b65262b42b45ed1efa8347cc297f161819845f8d198ab302e82"
+    },
+    "combined": "1871a428c88d126d0b58c45f40ea83b666cc0578ac54d4229cf2458ab29ab908"
+  },
+  "note_2026-11-05": "2026-11-05: the source moved from src/harness_autonomy/ to src/, and the package is now named clinical_agent; the files use LF line endings. Every model is called at OpenRouter with one API key, pinned to its own provider (openrouter_transport.py, moved into the package; openai_transport.py, claude_transport.py and the subscription modes removed; the model entries hold no prices, since the cost is the one OpenRouter reports), the arm original-corrected is in agent.ARMS, run.py has no --auth flag, and the FHIR container labels start with dev.clinical-agent. The prompts, tools, institutional entries, corrections, split, loop and scorer are unchanged. source_sha256_paper_runs is the digest that the config.json of every paper run records."
+}

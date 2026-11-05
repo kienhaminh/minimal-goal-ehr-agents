@@ -1,0 +1,19 @@
+# Everything is ignored except the listed source files and the lock files that the runners read.
+/*
+!/.gitignore
+!/.gitattributes
+!/pyproject.toml
+!/README.md
+!/src/
+!/sensitivity/
+!/patches/
+!/results/
+/results/*
+!/results/design-lock/
+!/results/sensitivity-lock/
+!/results/followup-lock/
+
+__pycache__/
+*.pyc
+*.egg-info/
+.env

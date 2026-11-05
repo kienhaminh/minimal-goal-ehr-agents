@@ -1,0 +1,2 @@
+# Keep the bytes of every file as committed: the design lock holds the SHA-256 of the source files.
+* -text

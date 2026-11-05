@@ -1,0 +1,54 @@
+{
+  "status": "locked 2026-11-04 before any test run (user decision 2026-11-04: run both analyses with GPT-6-Luna only); test runs use exactly these files",
+  "questions": {
+    "S5_no_record_locations": "Does the result of the locked design depend on the one addition to the moved information, the 'Records:' sentence of each terminology entry (FHIR resource type and search field)?",
+    "S6_goal_paraphrase": "Does the result of the goal-only instruction depend on the single goal wording of each family?"
+  },
+  "design_unchanged": "The locked source (results/design-lock/lock.json, src/*.py) is not edited. sensitivity/run_followup.py replaces in memory the terminology entries and the terminology search description (S5) or the goal template and topics (S6), then calls clinical_agent.run.main; sensitivity/followup.json holds the variants.",
+  "conditions": {
+    "S0": "Locked design (existing runs <arm>-test-150-rep1 to -rep3 on GPT-6-Luna).",
+    "S5_no_record_locations": "Each terminology entry without its 'Records:' sentence; the terminology search description without the clause on resource type and search field. Codes, protocols, order catalog, prompt and tools unchanged.",
+    "S6_goal_paraphrase": "One reworded goal per family: a different template and a clinical rewording of the topic. Patient, topic and the reference to the hospital's rules kept; no code, threshold, step, time or answer format added."
+  },
+  "runs": {
+    "GPT-6-Luna": {
+      "S5_no_record_locations": [
+        "B",
+        "D"
+      ],
+      "S6_goal_paraphrase": [
+        "D"
+      ],
+      "repeats": 3,
+      "part": "test",
+      "run_ids": "<arm>-test-150-s5-rep1..rep3, D-test-150-s6-rep1..rep3"
+    },
+    "settings": "--workers 6 --auth subscription, reasoning effort medium, max steps 17, as the locked runs"
+  },
+  "hypotheses": {
+    "M1": "Under S5, pooled over 3 runs and paired by task, the 95% lower bound of D - B is above -10 points.",
+    "M2": "D(S5) - D(S0), pooled and paired by task, has a 95% lower bound above -10 points.",
+    "P1": "D(S6) - D(S0), pooled and paired by task, has a 95% lower bound above -10 points.",
+    "P2": "D(S6) - B(S0), pooled and paired by task, has a 95% lower bound above -10 points.",
+    "descriptive": "B(S5) - B(S0) and per-family success, without a threshold.",
+    "intervals": "Paired by task on the per-task mean over runs (normal approximation), and a family-cluster bootstrap (10 000 resamples, seed 1) as a check, as results/sensitivity-lock/plan.json.",
+    "outcomes": "passed (primary scorer), passed_upstream and passed_revised as in the main analysis."
+  },
+  "content_criteria": {
+    "G1": "A reworded goal names the same patient and the same clinical topic, by a clinical synonym or a rewording, and refers the agent to the hospital's rules.",
+    "G2": "A reworded goal adds no code, threshold, step, time window, medication name or answer format.",
+    "G3": "The reworded template shares no run of three or more consecutive words with the locked template.",
+    "R1": "An S5 terminology entry is the locked entry with its 'Records:' sentence removed and no other change."
+  },
+  "smoke_check": "Before the lock, D on dev tasks task3_12 and task10_17, once per condition (runs D-dev-smoke-s5, D-dev-smoke-s6; 2 of 2 passed in each), checked only that the variants reach the agent and the run completes; the folders were then deleted. No variant was changed after it.",
+  "allowed_changes": "None to the variants. A tool or transport failure is rerun with --resume.",
+  "reporting": "Every condition in this plan is reported with its result, whatever the result.",
+  "locked_at": "2026-11-04T11:56:52+00:00",
+  "sha256": {
+    "sensitivity/followup.json": "fdec22c17f7a7621b1408061a20ca6e0372b9a0fd537f1212e92c6f82779a589",
+    "sensitivity/run_followup.py": "c20eb7a6fb2cbe42f3d1fc9a32bfe9d723615c8edf804ccee216c08caa4815e6",
+    "source_combined": "e5d69f7fa6cba2cde74a580fc23aa4121a8e9da19edbb9c396ddd76a6e17d624",
+    "source_combined_paper_runs": "1871a428c88d126d0b58c45f40ea83b666cc0578ac54d4229cf2458ab29ab908"
+  },
+  "note_2026-11-05": "2026-11-05: the design source moved to src/, the package is now named clinical_agent, and the source got a new digest (results/design-lock/lock.json, note_2026-11-05); source_combined_paper_runs is the digest of the paper runs. The runners changed only in the package name of their imports and docstrings and in the docstring example, which lost its --auth flag."
+}

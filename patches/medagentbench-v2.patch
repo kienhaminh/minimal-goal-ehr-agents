@@ -1,0 +1,38 @@
+diff --git a/medagentbench_v2/src/medagentbenchevals/new_refsol.py b/medagentbench_v2/src/medagentbenchevals/new_refsol.py
+index 5e4f5c6..3e00998 100644
+--- a/medagentbench_v2/src/medagentbenchevals/new_refsol.py
++++ b/medagentbench_v2/src/medagentbenchevals/new_refsol.py
+@@ -59,9 +59,9 @@ def extract_posts(results):
+     posts = []
+     for idx, i in enumerate(results.history):
+         # print(i)
+-        if (i.role == "agent") and ("POST" in i.content):
+-            if (idx < len(results.history)) and (
+-                "POST request accepted" in results.history[idx + 1].content
++        if (i.role == "agent") and i.content.startswith("POST http"):
++            if (idx + 1 < len(results.history)) and (
++                results.history[idx + 1].content.strip() == "POST request accepted"
+             ):
+                 try:
+                     r = i.content
+diff --git a/medagentbench_v2/src/tool/calculator.py b/medagentbench_v2/src/tool/calculator.py
+index 909aff2..4846776 100644
+--- a/medagentbench_v2/src/tool/calculator.py
++++ b/medagentbench_v2/src/tool/calculator.py
+@@ -39,8 +39,15 @@ def create():
+     def calculator(args: CalculatorParams) -> Union[int, float]:
+         import math, datetime, decimal
+ 
++        def datetime_import(name, globals=None, locals=None, fromlist=(), level=0):
++            # CPython's date.today() imports time through the eval builtins.
++            if name == "time" and level == 0:
++                import time
++                return time
++            raise ImportError(f"Calculator import is not allowed: {name}")
++
+         safe_globals = {
+-            "__builtins__": {"sum": sum},
++            "__builtins__": {"sum": sum, "__import__": datetime_import},
+             "math": math,
+             "datetime": datetime,
+             "Decimal": decimal.Decimal,

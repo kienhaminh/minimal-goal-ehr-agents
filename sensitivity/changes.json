@@ -1,0 +1,12 @@
+{
+  "changes": [
+    {
+      "entry": "paraphrased_protocols[2] (heart rate, family 3)",
+      "criterion": "P1",
+      "reason": "The original states the answer: 'Answer with the two averages as numbers'. The paraphrase said 'Report both means numerically in the form ...', which no longer states that the two numbers are the final answer, so the answer format of the original was not kept. The rewrite states it again.",
+      "found": "Reading the failed attempts of the dev pilot (D-dev-100-s1, -s2, -s3: family 3 passed 2, 2 and 3 of 10, with the averages returned as text). Decided by the user on 2026-10-29.",
+      "before": "Heart rate trend review: Using observations carrying code 'HEARTRATE', compute the mean heart rate for the preceding 6 hours and, separately, for the preceding 12 hours. Report both means numerically in the form [6-hour average, 12-hour average]; where a period contains no heart rate value, report -1 for that period.",
+      "after": "Heart rate trend review: Using observations carrying code 'HEARTRATE', compute the mean heart rate for the preceding 6 hours and, separately, for the preceding 12 hours. The final answer is the two means given as numbers, [6-hour average, 12-hour average]; where a period contains no heart rate value, give -1 for that period."
+    }
+  ]
+}

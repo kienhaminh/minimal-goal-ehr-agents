@@ -1,0 +1,83 @@
+{
+  "status": "locked 2026-10-29 after the dev pilot and the change in sensitivity/changes.json (user decision 2026-10-29); test runs use exactly these files",
+  "question": "Does the result of the locked design depend on protocol entries that copy the benchmark's task wording, or on a library that holds only the ten target protocols?",
+  "design_unchanged": "The locked source (results/design-lock/lock.json, src/*.py) is not edited. sensitivity/run_sensitivity.py replaces the entries of the institutional libraries in memory and then calls clinical_agent.run.main; sensitivity/libraries.json holds the entries. Their SHA-256 values go into this file at the lock.",
+  "conditions": {
+    "S0": "Locked library (existing runs *-test-150-rep1 to -rep3 on GPT-6-Luna, *-test-150-terra* on GPT-6.1-Terra).",
+    "S1_paraphrase": "The ten target protocols rewritten in hospital-policy wording with the same facts; terminology and order catalog unchanged.",
+    "S2_realistic": "S1, plus about 30 unrelated hospital protocols, about 20 unrelated terminology entries and about 15 unrelated order-catalog entries.",
+    "S3_stress": "S2, plus one near-miss protocol per task family (shares words with the topic, governs a different population, indication or setting) and near-miss terminology and catalog entries.",
+    "S4_no_protocols": "Locked library without the protocol_search tool (current time, terminology and order catalog stay). Mechanism analysis."
+  },
+  "runs": {
+    "GPT-6-Luna": {
+      "S1_paraphrase": [
+        "D"
+      ],
+      "S2_realistic": [
+        "B",
+        "D"
+      ],
+      "S3_stress": [
+        "B",
+        "D"
+      ],
+      "S4_no_protocols": [
+        "D"
+      ],
+      "repeats": 3,
+      "part": "test"
+    },
+    "GPT-6.1-Terra": {
+      "S2_realistic": [
+        "B",
+        "D"
+      ],
+      "repeats": 1,
+      "part": "test"
+    },
+    "settings": "--workers 6 --auth subscription, reasoning effort medium, max steps 17, as the locked runs"
+  },
+  "hypotheses": {
+    "H1_primary": "Under S2_realistic on GPT-6-Luna, pooled over 3 runs and paired by task, the lower bound of the 95% confidence interval of D - B is above -10 percentage points.",
+    "H2": "Under S2_realistic on GPT-6-Luna, D(S2) - D(S0) pooled and paired by task has a 95% lower bound above -10 points.",
+    "H3": "Under S1_paraphrase on GPT-6-Luna, D(S1) - D(S0) has a 95% lower bound above -10 points.",
+    "descriptive": "S3_stress (D - B and D(S3) - D(S0)) and S4_no_protocols (against C and D(S0)) are reported without a threshold; GPT-6.1-Terra S2 is reported as a second model.",
+    "intervals": "Paired by task on the per-task mean over runs (normal approximation), and a family-cluster bootstrap (10 000 resamples, seed 1) as a check.",
+    "outcomes": "passed (primary scorer), passed_upstream and passed_revised as in the main analysis; cost, tool calls and seconds per task."
+  },
+  "content_criteria": {
+    "P1": "A paraphrase keeps every criterion, threshold, unit, code, time window, quantity, action, the rule for a missing record and the answer format of the original entry, with the same values.",
+    "P2": "A paraphrase adds no clinical information and removes none.",
+    "P3": "A paraphrase shares no run of 6 or more consecutive words with the original entry, counting neither codes nor order text (quoted text and the name of an order-catalog item, such as 'heparin 5000 units SC q8h prophylaxis').",
+    "P4": "A paraphrase keeps the quoted order text verbatim (for example 'Renal mass follow-up', 'Evaluate renal mass for biopsy or ablation.') and keeps the clinical topic term of the original title in its title.",
+    "D1": "A distractor is a plausible hospital protocol, terminology entry or catalog entry in the format of the library (topic: criteria and the actions they trigger, with codes).",
+    "D2": "An unrelated distractor (S2) concerns none of the ten task topics.",
+    "D3": "A near-miss distractor (S3) shares at least one word with a task topic but states a population, indication or setting that the task goal does not have, so that the goal identifies the target protocol; it does not contradict the target protocol for the target population.",
+    "D4": "No distractor uses a code of the target entries as a code (445118002, 74177, 90686, 91320, C64.2, CON417, COVIDVACCINE, FT4, HEARTRATE, IMGCT0491, IMGIL0001, NUR1373, QTCINTERVAL, TSH); an analyte name that equals a target code (TSH) may appear with a different code."
+  },
+  "dev_pilot": {
+    "runs": "GPT-6-Luna, B and D under S2_realistic and S3_stress, D under S1_paraphrase, once each on dev.",
+    "allowed_changes": "Only an entry that violates a content criterion (P1-P4, D1-D4) or a tool that fails to run is changed. A change is decided by reading the entry against the criterion, recorded in sensitivity/changes.json with the criterion and the reason, and is never made because an attempt failed when the entry meets the criteria.",
+    "not_changed": "The system prompt, the review, the tools and the locked library.",
+    "runs_done": {
+      "D-dev-100-s1": 84,
+      "B-dev-100-s2": 96,
+      "D-dev-100-s2": 79,
+      "B-dev-100-s3": 94,
+      "D-dev-100-s3": 80,
+      "note": "Passed of 100 before the change in changes.json."
+    }
+  },
+  "reporting": "Every condition in this plan is reported with its result, whatever the result.",
+  "entry_order": "Each condition's protocol, terminology and catalog entries are shuffled once with seed 1 (sensitivity/run_sensitivity.py), so target entries do not always come first when search scores tie.",
+  "locked_at": "2026-10-29T01:45:20+00:00",
+  "sha256": {
+    "sensitivity/libraries.json": "78d2790a2b03bda9c92396f8cb1e2144df57ffa0efad2f229a1137bf38c1e1a2",
+    "sensitivity/run_sensitivity.py": "b8b497effcb89c8eb6dfc04f6d4baebfd559ec156c4604914b4bf1015e447cfc",
+    "sensitivity/changes.json": "8f110f76deba13101f7b0dfe398d6b94cdef1dd51cd583555a2b698698f2ddb4",
+    "source_combined": "e5d69f7fa6cba2cde74a580fc23aa4121a8e9da19edbb9c396ddd76a6e17d624",
+    "source_combined_paper_runs": "1871a428c88d126d0b58c45f40ea83b666cc0578ac54d4229cf2458ab29ab908"
+  },
+  "note_2026-11-05": "2026-11-05: the design source moved to src/, the package is now named clinical_agent, and the source got a new digest (results/design-lock/lock.json, note_2026-11-05); source_combined_paper_runs is the digest of the paper runs. The runners changed only in the package name of their imports and docstrings."
+}
