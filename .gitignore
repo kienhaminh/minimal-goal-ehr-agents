@@ -6,7 +6,7 @@
 !/README.md
 !/src/
 !/sensitivity/
-!/patches/
+!/benchmark_fixes/
 !/results/
 /results/*
 !/results/design-lock/

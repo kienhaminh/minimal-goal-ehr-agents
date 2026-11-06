@@ -43,7 +43,7 @@ clock, so all arms share one scoring rule.
 Two mechanical repairs of the shared scoring code apply to every arm and every outcome alike; they are not a new
 scorer:
 
-- The scorer patch (`patches/medagentbench-v2.patch`) makes `extract_posts` count a POST only when it is a real
+- The scorer patch (`benchmark_fixes/medagentbench-v2.patch`) makes `extract_posts` count a POST only when it is a real
   request that the server accepted.
 - `history()` in `src/run.py` passes the scorer only the tool calls that ran without error, so a write that the server
   or the schema refused, which changed nothing, does not count as an action.
@@ -103,7 +103,7 @@ change only when the agent sent a POST request and the server accepted it, and i
 ```sh
 git clone -c core.autocrlf=false https://github.com/ericoericochen/medagentbenchv2.git benchmarks/MedAgentBench-v2
 git -C benchmarks/MedAgentBench-v2 checkout 46c93f39bd8679af35790eaaa5dd41bc067024a0
-git -C benchmarks/MedAgentBench-v2 apply ../../minimal-goal-ehr-agents/patches/medagentbench-v2.patch
+git -C benchmarks/MedAgentBench-v2 apply ../../minimal-goal-ehr-agents/benchmark_fixes/medagentbench-v2.patch
 ```
 
 Check the files. The SHA-256 values must be:
@@ -267,6 +267,24 @@ To score saved attempts again without a model call, for example after a change o
 python -m clinical_agent.rescore --runs A-test-150 D-test-150 --out rescore-test
 ```
 
+## Benchmark fixes
+
+`benchmark_fixes/` holds the repairs of MedAgentBench v2 that sit outside the locked design:
+
+- `medagentbench-v2.patch`: the scorer and calculator patch that every run used (installation step 2).
+- `discontinue.py`: a discontinuation tool that sets the original MedicationRequest to status "stopped", in place of
+  the study tool, which posts a new "stopped" order and leaves the original active because that is the shape the
+  benchmark scorer reads. `apply()` installs it in memory; no run reported in the paper used it.
+- `final_state.py`: an evaluator that judges an attempt by the patient's FHIR records before and after it.
+- `verify.py`: checks the tool and the evaluator on one disposable FHIR container, with no model call:
+
+```sh
+python -X utf8 benchmark_fixes/verify.py
+```
+
+The task corrections (`src/tasks.py`, `CORRECTIONS`) and the revised scorer (`src/revised_scorer.py`) are also fixes of
+the benchmark; they stay in `src/` because the runs import them and the design lock covers them.
+
 ## Layout
 
 ```text
@@ -282,7 +300,7 @@ src/                     The package clinical_agent (the locked design)
   fhir_workers.py        Disposable FHIR containers, one per worker
   openrouter_transport.py OpenRouter transport of every model
 sensitivity/             Sensitivity runners and their variant entries
-patches/                 The local patch of the MedAgentBench v2 scorer and calculator
+benchmark_fixes/         Benchmark repairs: scorer patch, status-changing discontinuation, final-state evaluator
 results/*-lock/          The locks of the design and of the sensitivity plans
 ```
 
